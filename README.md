@@ -22,6 +22,12 @@ To install MSBuild.NUnit, run the following command in the Package Manager Conso
 
 `PM> Install-Package MSBuild.NUnit`
 
+Version 1.0.0: Created using the unmodified code in the original 
+branch which is just an unmodified fork of monoman's code.
+
+Version 1.0.1: Created using the master branch after the project was restructured. 
+No functional changes were made.
+
 
 License: BSD
 ------------
