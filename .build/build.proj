@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Clean;Build">
+	<PropertyGroup>
+		<PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+		<ShouldRunTests Condition="'$(ShouldRunTests)' == ''">false</ShouldRunTests>
+		<RootDir Condition="'$(RootDir)' == ''">$(MSBuildProjectDirectory)\..\</RootDir>
+		<BuildDir Condition="'$(BuildDir)' == ''">$(RootDir).build\</BuildDir>
+		<OutDir Condition="'$(OutDir)' == ''">$(BuildDir)out\</OutDir>
+		<BinDir Condition="'$(BinDir)' == ''">$(OutDir)bin\</BinDir>
+		<NuGetPackagesDir Condition="'$(NuGetPackagesDir)' == ''">$(RootDir)packages\</NuGetPackagesDir>
+		<ProjectsOutDir Condition="'$(ProjectsOutDir)' == ''">$(OutDir)projects\</ProjectsOutDir>
+	</PropertyGroup>
+	<ItemGroup>
+		<DirsToMake Include="$(OutDir)" />
+		<DirsToMake Include="$(BinDir)" />
+		<DirsToMake Include="$(ProjectsOutDir)" />
+	</ItemGroup>
+
+<!--
+***************************************************************************************************
+***************************************************************************************************
+	Section: MSBuild Imports and Refrenced Assemblies
+***************************************************************************************************
+***************************************************************************************************
+-->
+	<!--*******************************************************************************************
+	    MSBuild.Community.Tasks
+		Instead of just using supplied targets file which imports all tasks, selectively import 
+		only the tasks needed.
+	    *******************************************************************************************-->
+	<PropertyGroup>
+		<MSBuildCommunityTasksPath Condition="'$(MSBuildCommunityTasksPath)' == ''">$(NuGetPackagesDir)MSBuildTasks.1.4.0.45\tools\</MSBuildCommunityTasksPath>
+		<MSBuildCommunityTasksLib>$(MSBuildCommunityTasksPath)MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLib>
+	</PropertyGroup>
+	<UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.RoboCopy" />
+
+<!--
+***************************************************************************************************
+***************************************************************************************************
+	Section: Project Referneces to Clean/Build/Rebiuld with Metadata Item Group
+***************************************************************************************************
+***************************************************************************************************
+-->
+	<ItemGroup>
+		<ProjectReference Include="$(RootDir)MSBuild.NUnit\MSBuild.NUnit.csproj">
+			<BinSourceDir>$(ProjectsOutDir)MSBuild.NUnit\</BinSourceDir>
+			<OutDir>$(ProjectsOutDir)MSBuild.NUnit\</OutDir>
+		</ProjectReference>
+	</ItemGroup>
+
+<!--
+***************************************************************************************************
+***************************************************************************************************
+	Section: Main Targets: Clean, Build, Rebuild
+***************************************************************************************************
+***************************************************************************************************
+-->
+	<!--*******************************************************************************************
+	    Target: Clean
+	    *******************************************************************************************-->
+	<Target Name="Clean">
+		<!-- Need a better, smarter recursive 'Remove Directory' MSBuild task.
+		     Until it arrives, just make multiple calls to RemoveDir with ContinueOnError='true' on each call except the last one.
+			 This hadles edge cases where not everything is completely removed on the first call or two (or three).
+			 This is pretty lame, but it works.
+		-->
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" ContinueOnError="true" />
+		<RemoveDir Directories="$(OutDir)" />
+		<MSBuild 
+			Projects="@(ProjectReference)" 
+			Targets="Clean" 
+			Properties="OutDir=%(ProjectReference.OutDir)" 
+			/>
+	</Target>
+
+	<!--*******************************************************************************************
+	    Target: Build
+	    *******************************************************************************************-->
+	<Target Name="Build">
+		<CallTarget Targets="MakeDirs" />
+		<MSBuild 
+			Projects="@(ProjectReference)" 
+			Properties="SolutionDir=$(RootDir); OutDir=%(ProjectReference.OutDir); PostBuildEventUseInBuild=false" 
+			/>
+		<CallTarget Targets="CopyBinFiles" />
+	</Target>
+
+	<!--*******************************************************************************************
+	    Target: Rebuild
+	    *******************************************************************************************-->
+	<Target Name="Rebuild">
+		<CallTarget Targets="MakeDirs" />
+		<MSBuild 
+			Projects="@(ProjectReference)" 
+			Targets="Rebuild" 
+			Properties="SolutionDir=$(RootDir); OutDir=%(ProjectReference.OutDir); PostBuildEventUseInBuild=false" 
+			/>
+		<CallTarget Targets="CopyBinFiles" />
+	</Target>
+
+<!--
+***************************************************************************************************
+***************************************************************************************************
+	Section: Utility Targets
+***************************************************************************************************
+***************************************************************************************************
+-->
+	<!--*******************************************************************************************
+		Target: CopyBinFiles
+	    *******************************************************************************************-->
+	<Target Name="CopyBinFiles">
+		<CreateItem Include="%(ProjectReference.BinSourceDir)MSBuild.NUnit.*.*">
+			<Output ItemName="BinFiles" TaskParameter="Include"></Output>
+		</CreateItem>
+		<Copy SourceFiles="@(BinFiles)" DestinationFolder="$(BinDir)" ContinueOnError="true" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
+	</Target>
+
+	<!--*******************************************************************************************
+		Target: MakeDirs
+	    *******************************************************************************************-->
+	<Target Name="MakeDirs">
+		<MakeDir Directories="@(DirsToMake)" />
+	</Target>
+</Project>

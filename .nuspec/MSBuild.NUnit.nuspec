@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>MSBuild.NUnit</id>
+        <version>1.0.1</version>
+        <title>MSBuild.NUnit</title>
+        <authors>Wade Reynolds</authors>
+        <owners>Wade Reynolds</owners>
+        <licenseUrl>https://github.com/wade/MSBuild.NUnit/blob/master/LICENSE</licenseUrl>
+        <projectUrl>https://github.com/wade/MSBuild.NUnit/</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>MSBuild.NUnit provides support for NUnit in MSBuild.</description>
+        <summary>MSBuild.NUnit is more flexible than the NUnit support available in MSBuild Community Tasks as it allows for support of NUnit versions greater than 2.4. This project is a fork of monoman's MSBuild.NUnit project. This fork cleans up the project structure and code for better maintainability. More importantly, a proper build script has been added as well as proper NuGet package support.</summary>
+        <copyright>Copyright &#x00a9; Paul Welter, MSBuild NUnit Task Project, Wade A. Reynolds. All rights reserved.</copyright>
+        <language>en-US</language>
+        <tags>MSBuild NUnit MSBuildTasks Community</tags>
+    </metadata>
+    <files>
+		<file src="out\bin\MSBuild.NUnit.dll" target="lib\net40" />
+        <file src="out\bin\MSBuild.NUnit.pdb" target="lib\net40" />
+		<file src="..\LICENSE" target="LICENSE" />
+		<file src="..\README.md" target="README.md" />
+		<file src="..\README.monoman.md" target="README.monoman.md" />
+	</files>
+</package>

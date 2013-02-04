@@ -1,9 +1,36 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Web Developer Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuild.NUnit", "MSBuild.NUnit.csproj", "{B7437DB9-969C-4A02-B12F-C05CFA57D80D}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{233FD988-52F9-4DC0-8EC0-11B509F54DB8}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		README.monoman.md = README.monoman.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{C0F13D85-1FEF-47E0-AD7C-6F8ADE32F6E8}"
+	ProjectSection(SolutionItems) = preProject
+		.build\build.bat = .build\build.bat
+		.build\build.proj = .build\build.proj
+		.build\README.txt = .build\README.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuild.NUnit", "MSBuild.NUnit\MSBuild.NUnit.csproj", "{B7437DB9-969C-4A02-B12F-C05CFA57D80D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuspec", ".nuspec", "{EDCAFBA9-26F0-4D3A-B05D-55A724C21DC1}"
+	ProjectSection(SolutionItems) = preProject
+		.nuspec\MSBuild.NUnit.nuspec = .nuspec\MSBuild.NUnit.nuspec
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{7EB352C1-7CA6-46B1-8B53-EB30B32538EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D3956732-5446-4A5A-8233-5D4C3E974D32}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
