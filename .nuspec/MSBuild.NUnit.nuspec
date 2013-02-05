@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>MSBuild.NUnit</id>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <title>MSBuild.NUnit</title>
         <authors>Wade Reynolds</authors>
         <owners>Wade Reynolds</owners>
@@ -16,8 +16,7 @@
         <tags>MSBuild NUnit MSBuildTasks Community</tags>
     </metadata>
     <files>
-		<file src="out\bin\MSBuild.NUnit.dll" target="lib\net40" />
-        <file src="out\bin\MSBuild.NUnit.pdb" target="lib\net40" />
+		<file src="out\bin\MSBuild.NUnit.dll" target="tools" />
 		<file src="..\LICENSE" target="LICENSE" />
 		<file src="..\README.md" target="README.md" />
 		<file src="..\README.monoman.md" target="README.monoman.md" />
